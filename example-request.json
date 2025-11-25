@@ -1,0 +1,318 @@
+{
+  "input": {
+    "workflow": {
+      "37": {
+        "inputs": {
+          "filename": "qwen_image_edit_2509_fp8_e4m3fn.safetensors"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "UNETLoader"
+        }
+      },
+      "38": {
+        "inputs": {
+          "filename": "qwen_2.5_vl_7b_fp8_scaled.safetensors"
+        },
+        "class_type": "CLIPLoader",
+        "_meta": {
+          "title": "CLIPLoader"
+        }
+      },
+      "39": {
+        "inputs": {
+          "filename": "qwen_image_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+          "title": "VAELoader"
+        }
+      },
+      "80": {
+        "inputs": {
+          "filename": "Qwen-Image-Edit-2509-Lightning-8steps-V1.0-bf16.safetensors",
+          "model": [
+            "37",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "LoraLoaderModelOnly"
+        }
+      },
+      "225": {
+        "inputs": {
+          "image": "2509_BASE_00031_.png"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+          "title": "LoadImage"
+        }
+      },
+      "227": {
+        "inputs": {
+          "value": 1,
+          "model": [
+            "230",
+            0
+          ]
+        },
+        "class_type": "CFGNorm",
+        "_meta": {
+          "title": "CFGNorm"
+        }
+      },
+      "230": {
+        "inputs": {
+          "value": 3,
+          "model": [
+            "80",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingAuraFlow",
+        "_meta": {
+          "title": "ModelSamplingAuraFlow"
+        }
+      },
+      "231": {
+        "inputs": {
+          "seed": [
+            "277",
+            0
+          ],
+          "steps": 8,
+          "cfg": 1,
+          "sampler_name": "euler",
+          "scheduler": "simple",
+          "denoise": 1,
+          "model": [
+            "227",
+            0
+          ],
+          "positive": [
+            "256",
+            0
+          ],
+          "negative": [
+            "245",
+            0
+          ],
+          "latent_image": [
+            "252",
+            0
+          ]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+          "title": "KSampler"
+        }
+      },
+      "240": {
+        "inputs": {
+          "samples": [
+            "231",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+          "title": "VAEDecode"
+        }
+      },
+      "245": {
+        "inputs": {
+          "filename": "No photorealism, no 3D, no CGI, no digital noise, no Western modern cartoon style, no clutter, no incorrect lighting, no harsh shadows, no extra characters, no futuristic elements, no saturated neon colors, no distorted perspective.",
+          "clip": [
+            "38",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ],
+          "image1": [
+            "225",
+            0
+          ],
+          "image2": [
+            "259",
+            0
+          ],
+          "image3": [
+            "269",
+            0
+          ]
+        },
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "_meta": {
+          "title": "TextEncodeQwenImageEditPlus"
+        }
+      },
+      "249": {
+        "inputs": {
+          "image": "photographing-rivers-2-1536x1024.jpg"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+          "title": "LoadImage"
+        }
+      },
+      "252": {
+        "inputs": {
+          "width": 1024,
+          "height": 1024,
+          "batch_size": 1
+        },
+        "class_type": "EmptySD3LatentImage",
+        "_meta": {
+          "title": "EmptySD3LatentImage"
+        }
+      },
+      "256": {
+        "inputs": {
+          "text": "Redraw image 1 with camera angle of image 3",
+          "clip": [
+            "38",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ],
+          "image1": [
+            "225",
+            0
+          ],
+          "image2": [
+            "259",
+            0
+          ],
+          "image3": [
+            "269",
+            0
+          ]
+        },
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "_meta": {
+          "title": "TextEncodeQwenImageEditPlus"
+        }
+      },
+      "258": {
+        "inputs": {
+          "image": "kimono_.png"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+          "title": "LoadImage"
+        }
+      },
+      "259": {
+        "inputs": {
+          "text": "lanczos",
+          "image": [
+            "258",
+            0
+          ]
+        },
+        "class_type": "ImageScaleToTotalPixels",
+        "_meta": {
+          "title": "ImageScaleToTotalPixels"
+        }
+      },
+      "264": {
+        "inputs": {
+          "filename_prefix": [
+            "276",
+            0
+          ],
+          "images": [
+            "240",
+            0
+          ]
+        },
+        "class_type": "SaveImage",
+        "_meta": {
+          "title": "SaveImage"
+        }
+      },
+      "269": {
+        "inputs": {
+          "value": 0.4,
+          "image": [
+            "274",
+            0
+          ]
+        },
+        "class_type": "Canny",
+        "_meta": {
+          "title": "Canny"
+        }
+      },
+      "270": {
+        "inputs": {
+          "images": [
+            "269",
+            0
+          ]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+          "title": "PreviewImage"
+        }
+      },
+      "274": {
+        "inputs": {
+          "text": "lanczos",
+          "image": [
+            "249",
+            0
+          ]
+        },
+        "class_type": "ImageScaleToTotalPixels",
+        "_meta": {
+          "title": "ImageScaleToTotalPixels"
+        }
+      },
+      "276": {
+        "inputs": {
+          "text": "Qwen_Canny_Seed_",
+          "string_b": [
+            "278",
+            0
+          ]
+        },
+        "class_type": "StringConcatenate",
+        "_meta": {
+          "title": "StringConcatenate"
+        }
+      },
+      "277": {
+        "inputs": {
+          "value": 302695554700724
+        },
+        "class_type": "easy seed",
+        "_meta": {
+          "title": "easy seed"
+        }
+      },
+      "278": {
+        "inputs": {
+          "source": [
+            "277",
+            0
+          ]
+        },
+        "class_type": "AnyToString",
+        "_meta": {
+          "title": "AnyToString"
+        }
+      }
+    }
+  }
+}
